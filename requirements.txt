@@ -1,0 +1,10 @@
+# Tools
+jupyter
+notebook
+
+# Processing Data
+pandas
+nltk
+
+# Plotting
+matplotlib
