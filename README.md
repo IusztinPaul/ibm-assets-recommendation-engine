@@ -35,7 +35,13 @@ It consists of two main `csv` files:
 * `articles_community.csv`: Information about every article from the IBM internal blog.
 
 * You can download the data [here](https://drive.google.com/drive/folders/1XEFmUJoW19MMoL3oDR_CfR6kRc5Kc-ta?usp=sharing).
-* For everything to work outside the box, it should be placed at `./data/`.
+* For everything to work outside the box, it should be placed at `./data/`:
+```
+ibm-assets-recommendation-engine / 
+                                / data /
+                                     / user-item-interactions.csv
+                                     / articles_community.csv
+```
 
 ## 4. Usage <a name="usage"></a>
 ### File Structure
