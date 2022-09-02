@@ -131,3 +131,7 @@ dmypy.json
 # Data
 *.csv
 *.p
+
+# IDEs
+.idea
+.vscode
