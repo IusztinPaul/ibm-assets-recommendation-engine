@@ -131,7 +131,6 @@ def get_recommendations(
 
     seen_articles_ids, seen_article_names = utils.get_user_articles(user_id, df)
     user_article_interactions = user_article_interactions[~user_article_interactions.index.isin(seen_articles_ids)]
-    # user_article_ids_interactions = np.setdiff1d(user_article_interactions.index, seen_articles_ids)
     user_article_ids_interactions = user_article_interactions[:n_top].index.tolist()
 
     user_article_names_interactions = utils.get_article_names(user_article_ids_interactions, df)
