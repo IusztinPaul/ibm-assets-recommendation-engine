@@ -37,10 +37,9 @@ It consists of two main `csv` files:
 * You can download the data [here](https://drive.google.com/drive/folders/1XEFmUJoW19MMoL3oDR_CfR6kRc5Kc-ta?usp=sharing).
 * For everything to work outside the box, it should be placed at `./data/`:
 ```
-ibm-assets-recommendation-engine / 
-                                / data /
-                                     / user-item-interactions.csv
-                                     / articles_community.csv
+data /
+     / user-item-interactions.csv
+     / articles_community.csv
 ```
 
 ## 4. Usage <a name="usage"></a>
