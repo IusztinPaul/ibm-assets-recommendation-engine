@@ -5,6 +5,7 @@ notebook
 # Processing Data
 pandas
 nltk
+sklearn
 
 # Plotting
 matplotlib

@@ -7,10 +7,19 @@ from engine import matrix_factorization, data, rank, content
 
 
 class Recommender:
+    """
+    IBM user-article recommendation engine.
+    """
+
     def __init__(
             self,
             n_top: int
     ):
+        """
+
+        :param n_top: The maximum number of articles recommended to a user.
+        """
+
         self.n_top = n_top
 
         # Learnable information.

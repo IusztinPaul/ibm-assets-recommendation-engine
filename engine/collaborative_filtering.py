@@ -6,11 +6,11 @@ import pandas as pd
 from engine import utils
 
 
-def get_top_sorted_users(user_id: int, df: pd.DataFrame, user_item: pd.DataFrame):
-    '''
+def get_top_sorted_users(user_id: int, df: pd.DataFrame, user_item: pd.DataFrame) -> pd.DataFrame:
+    """
     INPUT:
-    user_id - (int)
-    df - (pandas dataframe) df as defined at the top of the notebook
+    user_id - (int) The user_id to which we want to find its neighbors.
+    df - (pandas dataframe) IBM user-article interaction DataFrame
     user_item - (pandas dataframe) matrix of users by articles:
             1's when a user has interacted with an article, 0 otherwise
 
@@ -19,12 +19,8 @@ def get_top_sorted_users(user_id: int, df: pd.DataFrame, user_item: pd.DataFrame
     neighbors_df - (pandas dataframe) a dataframe with:
                     neighbor_id - is a neighbor user_id
                     similarity - measure of the similarity of each user to the provided user_id
-                    num_interactions - the number of articles viewed by the user - if a u
-
-    Other Details - sort the neighbors_df by the similarity and then by number of interactions where
-                    highest of each is higher in the dataframe
-
-    '''
+                    num_interactions - the number of articles viewed by the user
+    """
 
     current_user_vec = user_item.loc[user_id]
     similarity_df = user_item @ current_user_vec
@@ -47,9 +43,12 @@ def get_recommendations(
         user_item: pd.DataFrame,
         n_top: int = 10
 ) -> Tuple[List[str], List[str]]:
-    '''
+    """
     INPUT:
-    user_id - (int) a user id
+    user_id - (int) the user id to which we want to make the recommendations
+    df - (dataframe) IBM user-article interaction DataFrame
+    user_item (dataframe) - matrix of users by articles:
+            1's when a user has interacted with an article, 0 otherwise
     n_top - (int) the number of recommendations you want for the user
 
     OUTPUT:
@@ -60,7 +59,7 @@ def get_recommendations(
     Loops through the users based on closeness to the input user_id
     For each user - finds articles the user hasn't seen before and provides them as recs
     Does this until m recommendations are found
-    '''
+    """
 
     similar_users = get_top_sorted_users(user_id, df, user_item)
     seen_article_ids, seen_article_names = utils.get_user_articles(user_id, df)

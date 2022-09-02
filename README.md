@@ -23,6 +23,10 @@ To install all the requirements run (preferably within a virtual environment):
 ```shell
 pip install -r requirements.txt
 ```
+To convert the notebook into `pdf` you need to install the following:
+```shell
+sudo apt-get install pandoc
+```
 
 ## 3. Data <a name="data"></a>
 We used a user-article interaction public data provided by IBM. It is based on their internal blog.

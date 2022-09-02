@@ -53,12 +53,16 @@ def get_top_unseen_similar_articles(
         minimum_similarity_score: int = 3
 ) -> Tuple[list, list]:
     """
+    :param article_id: The reference article_id to which the function will find similar content.
+    :param seen_article_ids: The article_ids that are already "seen" / not valid.
+    :param content_article_df: The IBM articles vectorized content DataFrame.
+    :param df:  IBM user-article interaction DataFrame
+    :param minimum_similarity_score: The minimum value that we accept as the similarity score
+        between a user and an article.
 
-    :param article_id:
-    :param content_article_df:
-    :param df:
-    :param minimum_similarity_score:
     :return:
+        content_recommended_article_ids: a list of similar articles by article id
+        content_recommended_article_names: a list of similar articles by article title
     """
 
     content_recommended_article_ids, content_recommended_article_names = get_top_similar_articles(
@@ -88,16 +92,17 @@ def get_top_similar_articles(
         df: pd.DataFrame,
         minimum_similarity_score: int = 3
 ) -> Tuple[list, list]:
-    '''
+    """
     INPUT:
         article_id: The article_id to which we want to see the most similar content.
         df: DataFrame that contains the raw content information about the articles.
         content_article_df: DataFrame that contains the content article vectors.
         minimum_similarity_score: The minimum similarity score we accept.
 
-    OUTPUT:
-        A list of n_count recommended articles ids sorted to how similar are relative to article_id.
-    '''
+    :return:
+        articles_ids: a list of similar articles by article id
+        articles:  a list of similar articles by article title
+    """
 
     # If the article is new we cannot make any recommendations.
     if article_id not in content_article_df.index:
@@ -122,7 +127,7 @@ def get_recommendations(
         n_count: int = 10,
         minimum_similarity_score: int = 3
 ) -> Tuple[List[str], List[str]]:
-    '''
+    """
     INPUT:
         user_id: The user to which we want to recommend content to.
         df: DataFrame that contains the raw content information about the articles.
@@ -131,8 +136,9 @@ def get_recommendations(
         minimum_similarity_score: The minimum accepted similarity between articles.
 
     OUTPUT:
-        A list of n_count recommended articles ids sorted to how similar are relative to article_id.
-    '''
+        recommendations_ids - (list) a list of recommendations for the user by article id
+        recommendations - (list) a list of recommendations for the user by article title
+    """
 
     seen_articles_df = df.groupby(["user_id", "article_id"], as_index=False)["title"].count().rename(
         columns={"title": "views"})

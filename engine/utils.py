@@ -4,7 +4,7 @@ import pandas as pd
 
 
 def get_article_names(article_ids: List[str], df: pd.DataFrame) -> List[str]:
-    '''
+    """
     INPUT:
     article_ids - (list) a list of article ids
     df - (pandas dataframe) df as defined at the top of the notebook
@@ -12,7 +12,7 @@ def get_article_names(article_ids: List[str], df: pd.DataFrame) -> List[str]:
     OUTPUT:
     article_names - (list) a list of article names associated with the list of article ids
                     (this is identified by the title column)
-    '''
+    """
 
     article_names = df[df["article_id"].isin(article_ids)]
     article_names = article_names[["article_id", "title"]]
@@ -30,7 +30,7 @@ def get_article_names(article_ids: List[str], df: pd.DataFrame) -> List[str]:
 
 
 def get_user_articles(user_id: int, df: pd.DataFrame) -> Tuple[List[str], List[str]]:
-    '''
+    """
     INPUT:
     user_id - (int) a user id
     df - (pandas dataframe) user-article interaction DataFrame
@@ -42,7 +42,7 @@ def get_user_articles(user_id: int, df: pd.DataFrame) -> Tuple[List[str], List[s
 
     Description:
     Provides a list of the article_ids and article titles that have been seen by a user
-    '''
+    """
 
     article_ids = df[df["user_id"] == user_id]["article_id"].unique().tolist()
     article_names = get_article_names(article_ids, df)

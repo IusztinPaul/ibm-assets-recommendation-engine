@@ -7,8 +7,14 @@ from matplotlib import pyplot as plt
 from engine import data, utils
 
 
-def compute_svd(user_item_train: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
-    u_train, s_train, vt_train = np.linalg.svd(user_item_train)
+def compute_svd(user_item: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """
+    :param user_item:  matrix of users by articles:
+            1's when a user has interacted with an article, 0 otherwise
+    :return: SVD matrices
+    """
+
+    u_train, s_train, vt_train = np.linalg.svd(user_item)
 
     return u_train, s_train, vt_train
 
@@ -17,6 +23,14 @@ def fit_svd(
         df: pd.DataFrame,
         plot: bool = True
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Function that computes SVD and finds the best number of latent features.
+
+    :param df: IBM user-article interaction DataFrame
+    :param plot: If true, plot the results.
+    :return: The S, U, VT matrices with the best number of latent features.
+    """
+
     df_train, df_test = data.create_test_train_split(df)
     user_item_train, user_item_test = data.create_test_and_train_user_item(df_train, df_test)
 
@@ -93,23 +107,19 @@ def get_recommendations(
         fitted_svd_matrices: Tuple[np.ndarray, np.ndarray, np.ndarray],
         n_top: int = 10
 ) -> Tuple[List[str], List[str]]:
-    '''
+    """
     INPUT:
-    user_id - (int) a user id
-    df -
-    user_item_train -
-    fitted_svd_matrices -
+    user_id - (int) the user id to which we want to make the recommendations
+    df - (dataframe) IBM user-article interaction DataFrame
+    user_item (dataframe) -  matrix of users by articles:
+            1's when a user has interacted with an article, 0 otherwise
+    fitted_svd_matrices - a tuple with the S, U, VT matrices, where the best number of latent features is used.
     n_top - (int) the number of recommendations you want for the user
 
     OUTPUT:
-    recs - (list) a list of recommendations for the user by article id
-    rec_names - (list) a list of recommendations for the user by article title
-
-    Description:
-    Loops through the users based on closeness to the input user_id
-    For each user - finds articles the user hasn't seen before and provides them as recs
-    Does this until m recommendations are found
-    '''
+    user_article_ids_interactions - (list) a list of recommendations for the user by article id
+    user_article_names_interactions - (list) a list of recommendations for the user by article title
+    """
 
     user_id_svd_index = np.where(np.isin(user_id, user_item.index))[0]
     u, s, v = fitted_svd_matrices

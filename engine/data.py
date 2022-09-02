@@ -101,7 +101,7 @@ def tokenize(text):
 
 
 def create_user_item_matrix(df):
-    '''
+    """
     INPUT:
     df - pandas dataframe with article_id, title, user_id columns
 
@@ -111,7 +111,7 @@ def create_user_item_matrix(df):
     Description:
     Return a matrix with user ids as rows and article ids on the columns with 1 values where a user interacted with
     an article and a 0 otherwise
-    '''
+    """
 
     user_item = df.groupby(["user_id", "article_id"]).count().unstack()
     user_item.columns = user_item.columns.droplevel()
@@ -123,6 +123,11 @@ def create_user_item_matrix(df):
 
 
 def create_test_train_split(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    """
+    :param df: IBM user-article interaction DataFrame
+    :return: A train-test split for the IBM DataFrame.
+    """
+
     df_train = df.head(40000)
     df_test = df.tail(5993)
 
@@ -130,17 +135,17 @@ def create_test_train_split(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFram
 
 
 def create_test_and_train_user_item(df_train, df_test):
-    '''
+    """
     INPUT:
-    df_train - training dataframe
-    df_test - test dataframe
+    df_train - training IBM user-article interaction dataframe
+    df_test - test IBM user-article interaction dataframe
 
     OUTPUT:
     user_item_train - a user-item matrix of the training dataframe
                       (unique users for each row and unique articles for each column)
     user_item_test - a user-item matrix of the testing dataframe
                     (unique users for each row and unique articles for each column)
-    '''
+    """
 
     user_item_train = create_user_item_matrix(df_train)
     user_item_test = create_user_item_matrix(df_test)
@@ -152,6 +157,14 @@ def compute_split_diff(
         user_item_train: pd.DataFrame,
         user_item_test: pd.DataFrame
 ) -> Dict[str, np.ndarray]:
+    """
+    Function that computes all the old and new users/articles between the train and test split.
+
+    :param user_item_train: training IBM user-article interaction dataframe
+    :param user_item_test: test IBM user-article interaction dataframe
+    :return: A dictionary with all the differences.
+    """
+
     old_users = np.intersect1d(user_item_test.index.values, user_item_train.index.values)
     new_users = np.setdiff1d(user_item_test.index.values, user_item_train.index.values)
 
